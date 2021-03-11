@@ -11,7 +11,7 @@ from fortnitepy.ext import commands
 email = ''
 password = ''
 filename = 'device_auths.json'
-description = 'My awesome fortnite bot / sanic app!'
+description = 'Sanic/fortnitepy bot made by oofsamy#2714'
 
 def get_device_auth_details():
     if os.path.isfile(filename):
@@ -42,6 +42,7 @@ bot = commands.Bot(
 sanic_app = sanic.Sanic(__name__)
 server = None
 
+sanic_app.static('/static', './static')
 
 @bot.event
 async def event_device_auth_generate(details, email):
@@ -58,14 +59,12 @@ async def get_friends_handler(request):
     return sanic.response.html("index.html")
 
 @sanic_app.route('/html')
-def handle_request(request):
-    with open("index.html", 'r') as fp:
-        print(fp)
-        #return sanic.response.html(fp)
+async def handle_request(request):
+    return await file('test.html')
 
 @sanic_app.route('/')
 async def index(request):
-    return await file('test.html')
+    return await file('main.html')
 
 @sanic_app.websocket('/feed')
 async def feed(request, ws):
@@ -73,13 +72,12 @@ async def feed(request, ws):
         data = await ws.recv()
         if data == "renegaderaider":
             await bot.party.me.set_outfit(asset="CID_028_Athena_Commando_F")
-
-@sanic_app.route('/rais')
-async def get_out_of_my_game_bro(request):
-#    file = codecs.open("index.html", "r", "utf-8")
-#    return sanic.response.html(file.read())
-    return await file('index.html')
-
+        elif data == "ghoultrooper":
+            await bot.party.me.set_outfit(asset="CID_029_Athena_Commando_F_Halloween")
+        elif data == "jonesy":
+            await bot.party.me.set_outfit(asset="CID_005_Athena_Commando_M_Default")
+        elif data == "blackknight":
+            await bot.party.me.set_outfit(asset="CID_035_Athena_Commando_M_Medieval")
 @bot.event
 async def event_ready():
     global server

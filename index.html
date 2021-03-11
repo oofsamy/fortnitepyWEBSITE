@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>WebSocket demo</title>
+        <title>oofsamy lobby bot</title>
+        <link rel="stylesheet" href="static/styles.css">
     </head>
     <body>
-        <button onClick="sendMsg()">Hit Me</button>
+        <button type = "button" name = "blackKnightButton" onClick="blackKnight()" class="blackKnight">
+            <img  width="200" height="200" src="https://media.fortniteapi.io/images/59eb4f6-e81c036-42fab23-375205c/transparent.png"/>
+         </button>
+        <button type = "button" name = "renegadeRaiderButton" onClick="renegadeRaider()" class="renegadeRaider">
+            <img  width="200" height="200" src="https://media.fortniteapi.io/images/5c25ad9-965d973-1ecd1c9-4a06e53/transparent.png"/>
+         </button>
+        <button type = "button" name = "ghoulTrooperButton" onClick="ghoulTrooper()" class="ghoulTrooper">
+            <img  width="200" height="200" src="https://media.fortniteapi.io/images/1e55a45-cb54ceb-bafa8c9-805b40b/transparent.png"/>
+         </button>
+        <button type = "button" name = "jonesyButton" onClick="jonesy()" class="jonesyButton">
+            <img  width="200" height="200" src="https://media.fortniteapi.io/images/3be25311904134f9c36a12a8e4a43d10/transparent.png"/>
+         </button>
+         <label for="username" clas="username">Username Of Player To Add</label>
+         <input type="text" id="username" name="usernameInput"><br><br>
+         <input type="submit" value="Add Friend">
+       
         <script>
             var ws = new WebSocket('ws://' + document.domain + ':' + location.port + '/feed'),
                 messages = document.createElement('ul');
@@ -16,20 +32,47 @@
                 messages.appendChild(message);
             };
 
-            function sendMsg() {
+            function renegadeRaider() {
                 ws.send("renegaderaider")
+                var messages = document.getElementsByTagName('ul')[0],
+                    message = document.createElement('li'),
+                    content = document.createTextNode('Skin set to renegade raider');
+                    message.className = "renegadeRaiderConsole"
+                message.appendChild(content);
+                messages.appendChild(message);
+            }
+
+            function ghoulTrooper() {
+                ws.send("ghoultrooper")
+                var messages = document.getElementsByTagName('ul')[0],
+                    message = document.createElement('li'),
+                    content = document.createTextNode('Skin set to ghoul trooper');
+                    message.classList.add("ghoulTrooperConsole")
+                message.appendChild(content);
+                messages.appendChild(message);
+            }
+
+            function jonesy() {
+                ws.send("jonesy")
+                var messages = document.getElementsByTagName('ul')[0],
+                    message = document.createElement('li'),
+                    content = document.createTextNode('Skin set to default jonesy');
+                    message.classList.add("jonesyConsole")
+                message.appendChild(content);
+                messages.appendChild(message);
+            }
+
+            function blackKnight() {
+                ws.send("blackknight")
+                var messages = document.getElementsByTagName('ul')[0],
+                    message = document.createElement('li'),
+                    content = document.createTextNode('Skin set to black knight');
+                    message.classList.add("blackKnightConsole")
+                message.appendChild(content);
+                messages.appendChild(message);
             }
 
             document.body.appendChild(messages);
-            window.setInterval(function() {
-                data = 'working'
-                ws.send(data);
-                var messages = document.getElementsByTagName('ul')[0],
-                    message = document.createElement('li'),
-                    content = document.createTextNode('Sent: ' + data);
-                message.appendChild(content);
-                messages.appendChild(message);
-            }, 1000);
         </script>
     </body>
 </html>
